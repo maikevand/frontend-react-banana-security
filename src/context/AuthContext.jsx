@@ -13,10 +13,17 @@ function AuthContextProvider({children}) {
         navigate("/profile");
     }
 
+    function logout() {
+        setIsAuth(false);
+        console.log("Gebruiker is uitgelogd!");
+        navigate("/");
+    }
+
     const authData = {
         isAuth,
         user: "M",
-        login
+        login,
+        logout
     };
     return (
         <AuthContext.Provider value={authData}>

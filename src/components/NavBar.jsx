@@ -22,7 +22,7 @@ function NavBar() {
 
             <div>
                 {auth.isAuth ? (
-                    <button type="button">Log uit</button>
+                    <button type="button" onClick={auth.logout}>Log uit</button>
                 ) : (
                     <>
                         <button
