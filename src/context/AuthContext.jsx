@@ -8,7 +8,8 @@ function AuthContextProvider({children}) {
     const [user, setUser] = useState(null);
     const navigate = useNavigate();
 
-    function login() {
+    function login(token) {
+        localStorage.setItem("token", token);
         setIsAuth(true);
         setUser("M");
         console.log("Gebruiker is ingelogd!");
@@ -16,6 +17,7 @@ function AuthContextProvider({children}) {
     }
 
     function logout() {
+        localStorage.removeItem("token");
         setIsAuth(false);
         setUser(null);
 
