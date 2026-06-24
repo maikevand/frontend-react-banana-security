@@ -1,5 +1,7 @@
 import {createContext, useState} from "react";
 import {useNavigate} from "react-router-dom";
+import {jwtDecode} from "jwt-decode";
+import axios from "axios";
 
 export const AuthContext = createContext(null);
 
@@ -8,12 +10,30 @@ function AuthContextProvider({children}) {
     const [user, setUser] = useState(null);
     const navigate = useNavigate();
 
-    function login(token) {
+    async function login(token) {
         localStorage.setItem("token", token);
-        setIsAuth(true);
-        setUser("M");
-        console.log("Gebruiker is ingelogd!");
-        navigate("/profile");
+
+        const decodedToken = jwtDecode(token);
+        const userId = decodedToken.userId;
+
+        try {
+            const userResponse = await axios.get(
+                `https://novi-backend-api-wgsgz.ondigitalocean.app/api/users/${userId}`,
+                {
+                    headers: {
+                        "novi-education-project-id": "d17b3fdb-9491-4065-b047-efe9ea4b773c",
+                        Authorization: `Bearer ${token}`
+                    }
+                }
+            );
+
+            setUser(userResponse.data);
+            setIsAuth(true);
+            navigate("/profile");
+        } catch (error) {
+            localStorage.removeItem("token");
+            console.error("Er ging iets mis", error);
+        }
     }
 
     function logout() {
