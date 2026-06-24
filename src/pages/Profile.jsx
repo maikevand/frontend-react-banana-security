@@ -1,25 +1,60 @@
-import React, {useContext} from 'react';
-import { Link } from 'react-router-dom';
+import React, {useContext, useEffect, useState} from 'react';
+import {Link} from 'react-router-dom';
 import {AuthContext} from "../context/AuthContext";
+import axios from "axios";
 
 function Profile() {
-    const auth = useContext(AuthContext);
-    console.log(auth);
-  return (
-    <>
-      <h1>Profielpagina</h1>
-      <section>
-        <h2>Gegevens</h2>
-        <p><strong>Gebruikersnaam:</strong> hardcoded-test</p>
-        <p><strong>Email:</strong> hardcoded@test.com</p>
-      </section>
-      <section>
-        <h2>Strikt geheime profiel-content</h2>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab alias cum debitis dolor dolore fuga id molestias qui quo unde?</p>
-      </section>
-      <p>Terug naar de <Link to="/">Homepagina</Link></p>
-    </>
-  );
+    const {user} = useContext(AuthContext);
+    const [secrets, setSecrets] = useState([]);
+
+    console.log("User uit Context:", user);
+
+    useEffect(() => {
+        async function fetchSecrets() {
+            const token = localStorage.getItem("token");
+
+            try {
+                const response = await axios.get(
+                    "https://novi-backend-api-wgsgz.ondigitalocean.app/api/secrets",
+                    {
+                        headers: {
+                            "novi-education-project-id": "d17b3fdb-9491-4065-b047-efe9ea4b773c",
+                            Authorization: `Bearer ${token}`
+                        }
+                    }
+                );
+
+                console.log("Secrets:", response.data);
+                setSecrets(response.data);
+            } catch (error) {
+                console.error("Secrets ophalen is mislukt", error);
+            }
+        }
+
+        fetchSecrets();
+    }, []);
+
+    return (
+        <>
+            <h1>Profielpagina</h1>
+            <section>
+                <h2>Gegevens</h2>
+                <p><strong>Gebruikersnaam:</strong> {user.username}</p>
+                <p><strong>Email:</strong> {user.email}</p>
+            </section>
+            <section>
+                <h2>Strikt geheime profiel-content</h2>
+
+                {secrets.map((secret) => (
+                    <article key={secret.id}>
+                        <h3>{secret.title}</h3>
+                        <p>{secret.content}</p>
+                    </article>
+                ))}
+            </section>
+            <p>Terug naar de <Link to="/">Homepagina</Link></p>
+        </>
+    );
 }
 
 export default Profile;
