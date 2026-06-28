@@ -27,17 +27,17 @@ function SignUp() {
                     }
                 }
             );
-            console.log("Registratie gelukt");
+            // console.log("Registratie gelukt");
             navigate("/signin");
         } catch (error) {
             console.error("Registreren is mislukt");
         }
 
-        console.log({
-            email,
-            password,
-            username
-        });
+        // console.log({
+        //     email,
+        //     password,
+        //     username
+        // });
     }
 
     return (
@@ -49,7 +49,7 @@ function SignUp() {
                 deserunt
                 doloremque ea eveniet facere fuga illum in numquam quia reiciendis rem sequi tenetur veniam?</p>
             <form onSubmit={handleSubmit}>
-                    <label htmlFor="email">E-mailadres
+                <label htmlFor="email">E-mailadres
                     <input
                         type="email"
                         id="email"
@@ -59,26 +59,26 @@ function SignUp() {
                         onChange={(event) => setEmail(event.target.value)}
                     />
                 </label>
-                    <label htmlFor="password">Wachtwoord
-                        <input
-                            type="password"
-                            id="password"
-                            name="password"
-                            value={password}
-                            placeholder="Wachtwoord"
-                            onChange={(event) => setPassword(event.target.value)}
-                            />
-                    </label>
-                    <label htmlFor="username">Gebruikersnaam
-                        <input
-                            type="text"
-                            id="username"
-                            name="username"
-                            value={username}
-                            placeholder="Gebruikersnaam"
-                            onChange={(event) => setUsername(event.target.value)}
-                        />
-                    </label>
+                <label htmlFor="password">Wachtwoord
+                    <input
+                        type="password"
+                        id="password"
+                        name="password"
+                        value={password}
+                        placeholder="Wachtwoord"
+                        onChange={(event) => setPassword(event.target.value)}
+                    />
+                </label>
+                <label htmlFor="username">Gebruikersnaam
+                    <input
+                        type="text"
+                        id="username"
+                        name="username"
+                        value={username}
+                        placeholder="Gebruikersnaam"
+                        onChange={(event) => setUsername(event.target.value)}
+                    />
+                </label>
                 <button type="submit">Registreren</button>
             </form>
             <p>Heb je al een account? Je kunt je <Link to="/signin">hier</Link> inloggen.</p>

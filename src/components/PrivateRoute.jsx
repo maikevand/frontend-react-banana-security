@@ -9,7 +9,7 @@ function PrivateRoute({children}) {
         return children;
     }
 
-    return <Navigate to="/signin" />;
+    return <Navigate to="/signin"/>;
 }
 
 export default PrivateRoute;

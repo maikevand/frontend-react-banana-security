@@ -7,8 +7,6 @@ function Profile() {
     const {user} = useContext(AuthContext);
     const [secrets, setSecrets] = useState([]);
 
-    console.log("User uit Context:", user);
-
     useEffect(() => {
         async function fetchSecrets() {
             const token = localStorage.getItem("token");
@@ -24,7 +22,6 @@ function Profile() {
                     }
                 );
 
-                console.log("Secrets:", response.data);
                 setSecrets(response.data);
             } catch (error) {
                 console.error("Secrets ophalen is mislukt", error);

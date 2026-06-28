@@ -16,11 +16,6 @@ function SignIn() {
             password
         };
 
-        console.log({
-            email,
-            password
-        });
-
         try {
             const response = await axios.post("https://novi-backend-api-wgsgz.ondigitalocean.app/api/login",
                 inlogData,
@@ -31,7 +26,7 @@ function SignIn() {
                 }
             );
 
-            console.log("Inloggen is gelukt", response.data);
+            // console.log("Inloggen is gelukt", response.data);
             login(response.data.token);
         } catch (error) {
             console.error("Inloggen is mislukt");
